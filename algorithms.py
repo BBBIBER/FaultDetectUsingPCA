@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from .detect_fault import *
 from .identify_fault import *
 from .calculate_anomaly_score import *

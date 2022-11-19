@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name="FaultDetect",
-      version="0.0.0",
+      version="0.0.1",
       description="Fault Detection/Identification/Reconstruction",
       url="https://github.com/TechDas/FaultDetect.git",
       author="Kyu Han, Seok",
