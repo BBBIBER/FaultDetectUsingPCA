@@ -1,0 +1,14 @@
+## 파일 무시
+
+## 다음과 같은 확장자는 전체 무시
+*.xlsb
+*.xlsx
+*.dll
+*.zip
+
+## 폴더 무시
+.ipynb_checkpoints/
+.idea/
+__pycache__/
+NoteBook/
+PPT/
