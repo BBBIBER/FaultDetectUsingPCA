@@ -7,7 +7,5 @@ setup(name="FaultDetect",
       author="Kyu Han, Seok",
       author_email="asdm159@gmail.com",
       zip_safe=False,
-      install_requires=[
-            'numpy==1.19.5'
-      ]
+      install_requires=[]
 )
