@@ -1,3 +1,9 @@
+사내 모델링 패키지가 설치되어 있어야 합니다.
+아래의 명령어를 통해 모델링 패키지를 설치할 수 있습니다.
+```
+git clone https://github.com/TechDas/Modellings.git
+```
+
 아래의 로직들이 구성되어 있습니다.
 
 
