@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
+import copy
 from .detect_fault import *
 from .identify_fault import *
 from .calculate_anomaly_score import *
-
+from .reconstruct_fault import *
 
 def diagnose_fault(x: np.ndarray, y_measure: float,
                    y_predict_model, model_fault_reference: float,
                    pca_model_info: dict, pca_limit: list,
                    tag_list: list, msg: dict,
                    group_reference: np.ndarray = None) -> [str, str, str]:
-
-    t2, spe = calculate_anomaly_score(x_data=x, pca_info=pca_model_info)
+    x_copy = copy.deepcopy(x)
+    t2, spe = calculate_anomaly_score(x_data=x_copy, pca_info=pca_model_info)
     fault_status = detect_x_fault(t2=t2, spe=spe, limit=pca_limit)
 
     if int(fault_status) is int(0):
@@ -18,19 +19,19 @@ def diagnose_fault(x: np.ndarray, y_measure: float,
         identify_msg_pca: str = ""
         fault_variable_pca = None
     else:
-        detect_msg_pca = f"{msg['unit_name']} > {msg['tag_name']} > {msg['step_name']} > {msg['Error_name']}"
+        detect_msg_pca = f"{msg['unit_name']} > {msg['step_name']} > Fault Detect"
 
         contribution = calculate_contribution(model_info=pca_model_info,
-                                              group_target=x, group_reference=group_reference,
+                                              group_target=x_copy, group_reference=group_reference,
                                               calc_type="Weight 1")
 
         where_x, fault_variable_pca = indentify_fault_variable(contribution, x_columns=tag_list)
-        identify_msg_pca = f"{msg['unit_name']} > {msg['tag_name']} > {msg['step_name']} > {msg['Error_name']}"
+        identify_msg_pca = f"{msg['unit_name']} > {msg['step_name']} > {fault_variable_pca} Error"
+        
+        reconstructed_x = reconstruct_by_iteration(x=x_copy, fault_sensor_index=where_x, pca_info=pca_model_info)
+        x_copy[:, where_x] = reconstructed_x[:, where_x]
 
-        fault_variable_reconstructed = x[where_x]  # 아직 확립되지 않았으므로 통과
-        x[where_x] = fault_variable_reconstructed
-
-    y_predict = float(y_predict_model.predict(x))
+    y_predict = float(y_predict_model.predict(x_copy))
 
     y_status = detect_anomaly_residual(ref=model_fault_reference,
                                        meas=y_measure,
@@ -39,8 +40,9 @@ def diagnose_fault(x: np.ndarray, y_measure: float,
     if int(y_status) is int(0):
         detect_msg_vs = "No Fault"
     else:
-        detect_msg_vs = f"{msg['unit_name']} > {msg['tag_name']} > {msg['step_name']} > {msg['Error_name']}"
-
+        detect_msg_vs = f"{msg['unit_name']} > {msg['step_name']} > Y Error"
+        print(f"Y Error- Y Predict:{round(y_predict,3)}, Y Measured:{round(y_measure,3)}")
+    del x_copy
     return detect_msg_pca, identify_msg_pca, fault_variable_pca, detect_msg_vs, y_predict
 
 
@@ -60,9 +62,7 @@ def diagnose_fault_using_virtual_sensors(x: np.ndarray, y_measure: float,
         model_info:
         tag_list:
         msg:
-
     Returns:
-
     """
     y_predict = float(y_predict_model.predict(x))
 
@@ -91,16 +91,13 @@ def diagnose_fault_using_pca_model(x: np.ndarray,
     """ 패턴 인식 기법(PCA 모델)을 이용하여 공정 이상을 감시하고 공정 이상의 원인을 파악하는 알고리즘
     1. Fault Detection
     2. Fault Sensor Identification
-
     Args:
         x:
         model_info:
         model_fault_reference:
         tag_list:
         msg:
-
     Returns:
-
     """
     t2, spe = calculate_anomaly_score(x_data=x, pca_info=model_info)
     fault_status = detect_x_fault(t2=t2, spe=spe, limit=model_fault_reference)
@@ -133,9 +130,7 @@ def predict_y_using_virtual_sensors(x: np.ndarray,
         y_predict_model:
         model_fault_reference:
         msg:
-
     Returns:
-
     """
     y_predict = float(y_predict_model.predict(x))
 
