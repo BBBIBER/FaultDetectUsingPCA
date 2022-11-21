@@ -46,64 +46,6 @@ x_num = len(tag_list)
 test_data
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>GAS_F</th>
-      <th>WTR_F</th>
-      <th>WTR_T</th>
-      <th>STM_T</th>
-      <th>STM_P</th>
-      <th>FLUE_T2</th>
-      <th>FLUE_O2</th>
-    </tr>
-    <tr>
-      <th>DateTime</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1384</th>
-      <td>1637.32</td>
-      <td>21.2</td>
-      <td>97.6</td>
-      <td>216.5</td>
-      <td>20.3</td>
-      <td>159</td>
-      <td>2.894</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
 ```python
 x_data = test_x[0].reshape(-1, x_num)
 y_data = test_y[0]
@@ -215,7 +157,7 @@ print(detect_alarm, alarm_messsage, fault_variable)
     True Test Unit > Test Step > GAS_F is Fault GAS_F
     
 
-# Algo 4. 
+# Algo 4. predict_y_using_virtual_sensors
 
 
 ```python
