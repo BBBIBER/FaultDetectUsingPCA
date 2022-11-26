@@ -29,8 +29,9 @@ def calculate_contribution(model_info: dict,
     group_target_scaled = _scale_x(model_x_mean=model_x_mean, model_x_std=model_x_std, data=group_target_mean)
 
     if group_reference is None:
-        group_reference_mean = [0 for i in range(x_num)]
-        group_reference_scaled = [0 for i in range(x_num)]
+        group_reference_mean = list(model_x_mean)
+        group_reference_scaled = _scale_x(model_x_mean=model_x_mean, model_x_std=model_x_std, data=group_reference_mean)
+
     else:
         group_reference_mean = _get_average(selected=group_reference)
         group_reference_scaled = _scale_x(model_x_mean=model_x_mean, model_x_std=model_x_std, data=group_reference_mean)
