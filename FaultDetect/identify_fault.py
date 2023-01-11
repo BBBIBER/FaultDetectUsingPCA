@@ -21,7 +21,7 @@ def calculate_contribution(model_info: dict,
     model_x_mean = model_info['x_mean']
     model_x_std = model_info['x_std']
 
-    # PCA, PLS 판단
+    # PCA 판단
     model_type, weight_key = _judge_model_type(model_info=model_info)
 
     weight_p_w = model_info[weight_key]
@@ -64,12 +64,8 @@ def calculate_contribution(model_info: dict,
 
 
 def _judge_model_type(model_info: dict) -> [str, str]:
-    if 'weight_star' in model_info.keys():
-        model_type = "PLS"
-        weight_key = 'weight_star'
-    else:
-        model_type = "PCA"
-        weight_key = 'loading_p'
+    model_type = "PCA"
+    weight_key = 'loading_p'
     return [model_type, weight_key]
 
 

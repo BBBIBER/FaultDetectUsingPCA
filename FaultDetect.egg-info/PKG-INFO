@@ -1,0 +1,11 @@
+Metadata-Version: 2.1
+Name: FaultDetect
+Version: 0.1
+Summary: Fault Detection, Identification and Reconstruction Using PCA(Principal Component Analysis)
+Home-page: https://github.com/Kyuhan1230/FaultDetect
+Author: Kyu Han, Seok
+Author-email: asdm159@gmail.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7

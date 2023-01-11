@@ -3,7 +3,7 @@ import copy
 from .detect_fault import *
 from .identify_fault import *
 from .calculate_anomaly_score import *
-from .reconstruct_fault import *
+from reconstruct_fault import *
 
 def diagnose_fault(x: np.ndarray, y_measure: float,
                    y_predict_model, model_fault_reference: float,
